@@ -11,7 +11,7 @@ namespace UniversityApi.Services
 {
     public interface IUniversityService 
     {
-        Task<IEnumerable<UniversityModel>> SearchAsync(string name);
+        Task<IEnumerable<UniversityModel>> SearchAsync(string country, string name);
     }
 
     public class UniversityService : IUniversityService
@@ -25,11 +25,11 @@ namespace UniversityApi.Services
             _config = config.Value;            
         }
 
-        public async Task<IEnumerable<UniversityModel>> SearchAsync(string name)
+        public async Task<IEnumerable<UniversityModel>> SearchAsync(string country, string name)
         {
             var result = new List<UniversityModel>();
 
-            var url = $"{_config.ApiBaseUrl}?country={_config.SearchCountry}&name={name}";
+            var url = $"{_config.ApiBaseUrl}?country={country}&name={name}";
 
             var response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)

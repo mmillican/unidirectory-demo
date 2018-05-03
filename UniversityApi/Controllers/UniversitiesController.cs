@@ -1,8 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using UniversityApi.Config;
+using UniversityApi.Models;
 using UniversityApi.Services;
 
 namespace UniversityApi.Controllers
@@ -12,12 +17,15 @@ namespace UniversityApi.Controllers
     {
         private readonly IUniversityService _universityService;
         private readonly ILogger<UniversitiesController> _logger;
+        private readonly UniversityConfig _config;
 
         public UniversitiesController(IUniversityService universityService,
-            ILogger<UniversitiesController> logger)
+            ILogger<UniversitiesController> logger,
+            IOptions<UniversityConfig> config)
         {
             _universityService = universityService;
-            this._logger = logger;
+            _logger = logger;
+            _config = config.Value;
         }
 
         [HttpGet("")]
@@ -25,7 +33,10 @@ namespace UniversityApi.Controllers
         {
             try 
             {
-                var universities = await _universityService.SearchAsync(name);
+                name = WebUtility.UrlEncode(name);
+                var country = WebUtility.UrlEncode(_config.SearchCountry);
+
+                IEnumerable<UniversityModel> universities = await _universityService.SearchAsync(country, name);
                 universities = universities.OrderBy(x => x.Name);
 
                 return Ok(universities);
@@ -33,7 +44,7 @@ namespace UniversityApi.Controllers
             catch(Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving universities");
-                
+
                 return StatusCode(500, ex.Message);
             }
         }

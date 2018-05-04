@@ -259,3 +259,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# web app ignores
+.DS_Store
+/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

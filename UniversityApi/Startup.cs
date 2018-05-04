@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,17 @@ namespace UniversityApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
 
             services.Configure<UniversityConfig>(Configuration.GetSection("university"));
             services.AddScoped<IUniversityService, UniversityService>();
@@ -39,6 +51,8 @@ namespace UniversityApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("default");
+            
             app.UseMvc();
         }
     }

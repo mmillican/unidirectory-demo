@@ -1,3 +1,32 @@
-<p>
-  universities works!
-</p>
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="">Search for a university</h1>
+    <form (ngSubmit)="search()" #searchForm="ngForm">
+    
+      <div class="form-group">
+          <input type="text" id="university-name" name="search" [(ngModel)]="searchName" class="form-control form-control-lg" placeholder="University name" />
+      </div>
+
+      <button class="btn btn-primary btn-lg" role="button">Search &raquo;</button>
+    </form>
+  </div>
+</div>
+
+<div class="container body-content">
+  <div *ngIf="hasResults">
+    <h2>Search results for '{{ searchName }}'</h2>
+
+    <ul>
+      <li *ngFor="let university of universities">
+        <strong>{{ university.name }}</strong>
+        <span *ngIf="university.web_pages.length > 0">
+          <br /><a [href]="university.web_pages[0]" target="_blank">{{ university.web_pages[0] }}</a>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="searchName && !hasResults">
+    <h3 class="text-danger">No results for '{{ searchName }}'</h3>
+  </div>
+</div>

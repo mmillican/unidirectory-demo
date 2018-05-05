@@ -10,8 +10,10 @@ import { University } from '../shared/models/university';
 })
 export class UniversitiesComponent implements OnInit {
   searchName = '';
+  lastKeypressTs = 0;
 
   universities: Array<University> = new Array<University>();
+
   get hasResults(): boolean {
     return this.universities && this.universities.length > 0;
   }
@@ -23,9 +25,9 @@ export class UniversitiesComponent implements OnInit {
   ngOnInit() {
   }
 
-  search(): void {
-    this._universityService.search(this.searchName).subscribe(result => {
-      this.universities = result;
-    });
+  search($event): void {
+      this._universityService.search(this.searchName).subscribe(result => {
+        this.universities = result;
+      });
   }
 }

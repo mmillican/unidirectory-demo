@@ -1,14 +1,9 @@
 <div class="jumbotron">
   <div class="container">
-    <h1 class="">Search for a university</h1>
-    <form (ngSubmit)="search()" #searchForm="ngForm">
-    
-      <div class="form-group">
-          <input type="text" id="university-name" name="search" [(ngModel)]="searchName" class="form-control form-control-lg" placeholder="University name" />
-      </div>
-
-      <button class="btn btn-primary btn-lg" role="button">Search &raquo;</button>
-    </form>
+    <h1 class="">Search for a university</h1>    
+    <div class="form-group">
+        <input type="text" id="university-name" [(ngModel)]="searchName" (keydown)="search($event)" class="form-control form-control-lg" placeholder="University name" />
+    </div>
   </div>
 </div>
 

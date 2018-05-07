@@ -28,6 +28,6 @@ $ ng serve
 
 ## Hosting
 
-The API is has a `serverless.template` to be deployed to AWS Lambda and API Gateway.
+The API is is designed to be deployed to AWS Lambda and API Gateway. There is a `serverless.template` file to configure this.
 
 The front-end was tested to work while hosted in an S3 bucket set up for "static site hosting".

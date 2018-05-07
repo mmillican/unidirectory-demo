@@ -32,7 +32,7 @@ namespace UniversityApi
             {
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200")
+                    policy.WithOrigins("http://localhost:4200", "http://m2-university.s3-website-us-east-1.amazonaws.com")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
